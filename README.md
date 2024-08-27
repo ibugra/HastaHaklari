@@ -3,11 +3,7 @@
 <p id="description">This project was developed for patients to express their opinions about the hospital. Patients can easily report their suggestions complaints or satisfaction to the hospital management by filling in the required information. Feedback on these opinions is shared with the patients as a Board Result.</p>
 
 
-<h2>🚀 Demo</h2>
-<img src="https://github.com/ibugra/HastaHaklari/blob/main/demo%20video/HastaHaklari.mp4">
 
-
-  
 <h2>🧐 Features</h2>
 
 Here're some of the project's best features:
