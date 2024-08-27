@@ -4,9 +4,9 @@
 
 
 
-<h2>Backend</h2>
+<h2>Backend Part</h2>
 
-<h2>🧐 Features</h2>
+<h3>🧐 Features</h3>
 
 Here're some of the project's best features:
 
@@ -15,7 +15,7 @@ Here're some of the project's best features:
 
   
   
-<h2>💻 Built with</h2>
+<h3>💻 Built with</h3>
 
 Technologies used in the project:
 
