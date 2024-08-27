@@ -5,8 +5,10 @@ This project was developed for patients to express their opinions about the hosp
 - Spring Boot was used in the backend part of the project.
 
 <h3>Features</h3>
-- REST API for managing views and board results: A simple API for creating, updating, and deleting suggestions, complaints, satisfaction or board results.
-- Uses MySQL for data persistence
+- It is a desktop application.
+- This application has been created in order to follow the stock of the products produced in the factory.
+- Adding, deleting, editing and viewing functions are available in the application.
+- Python (Tkinter) and SQL were used in the application.
 
 REST API for managing views and board results: A simple API for creating, updating, and deleting suggestions, complaints, satisfaction or board results.
 
