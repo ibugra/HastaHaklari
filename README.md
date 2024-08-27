@@ -4,7 +4,7 @@
 
 
 <h2>🚀 Demo</h2>
-<a href="https://github.com/ibugra/HastaHaklari/blob/main/demo%20video/HastaHaklari.mp4"></a>
+<img src="https://github.com/ibugra/HastaHaklari/blob/main/demo%20video/HastaHaklari.mp4">
 
 
   
