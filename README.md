@@ -4,9 +4,8 @@
 
 
 <h2>🚀 Demo</h2>
-![1](https://github.com/user-attachments/assets/f7f74fdf-a167-43c2-892f-8e55360e29dc)
 
-
+![Alt text](https://drive.google.com/file/d/1zrBLHSi2oQM8gGcG1HdQoSG8UDFcxGKt/view?usp=drive_link)
   
   
 <h2>🧐 Features</h2>
