@@ -4,9 +4,7 @@
 
 
 <h2>🚀 Demo</h2>
-
-![Alt text](https://drive.google.com/file/d/1zrBLHSi2oQM8gGcG1HdQoSG8UDFcxGKt/view?usp=drive_link)
-  
+ 
   
 <h2>🧐 Features</h2>
 
