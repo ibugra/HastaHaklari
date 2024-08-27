@@ -1,0 +1,392 @@
+<!-- navbar -->
+
+<div class="navbar">
+    <p-menubar>
+      <ng-template pTemplate="start" >
+        <a style="font-size: 21px; font-weight: bold; text-decoration: none; background-color: #eaeaea;">
+          Hasta Hakları
+        </a>
+      </ng-template>
+    </p-menubar>
+    
+    <div class="basvuru-button">
+        <p-button class="add-button" (onClick)="showDialog()" label="Yeni Başvuru" [text]="true" severity="secondary" size="small"></p-button>
+    </div>
+
+    <div style="margin-left: auto;">
+      <p-button class="filter-button" size="small" severity="secondary" [text]="true" label="Filtre Sıfırla" (onClick)="resetFilters()"></p-button>
+      
+      <p-calendar class="search-date" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" dateFormat="dd.mm.yy"
+        placeholder="Tarih Aralığı Giriniz" showButtonBar="true" [inputStyle]="{'width':'214px', 'height': '30px', 'background-color':'#eaeaea'}" 
+        (onSelect)="searchDateRange()" (onClearClick)="getApplications()"
+      />
+      
+      <p-iconField iconPosition="left">
+        <p-inputIcon styleClass="pi pi-search" />
+        <!-- <input type="search" #key="ngModel" ngModel (ngModelChange)="searchApplications(key.value)"
+          pInputText class="search-box p-inputtext-sm" placeholder="Başvuru ara..." id="search"/> -->
+          <input type="search" [(ngModel)] = "searchTerm" (input)="searchApplications()" 
+            pInputText class="search-box p-inputtext-sm" placeholder="Başvuru ara..." id="search"/>
+      </p-iconField>
+    </div>
+</div>
+
+
+<!-- Table -->
+
+<!-- <p *ngIf="!mBoolean" style="display: flex; justify-content: center; text-align: center; padding-top: 20%; font-size: 30px;"
+  >{{message}}</p> -->
+
+  <!-- *ngIf="mBoolean" -->
+
+<div class="table">
+  <div class="card">
+    <p *ngIf="applicants.length == 0" style="display: flex; justify-content: center; text-align: center; padding-top: 60%; font-size: 30px;">Veri Bulunamadı!!!</p>
+    <p-table #dt selectionMode="single" *ngIf="applicants.length != 0" [value]="applicants" 
+      [tableStyle]="{ 'width': '1160px', 'height': '5rem'}"
+      dataKey="id" [rows]="5" [showCurrentPageReport]="true" [paginator]="true"
+      currentPageReportTemplate="Toplam {totalRecords} veriden {first} ile {last} arasındakiler gösteriliyor" 
+      styleClass="p-datatable-gridlines p-datatable-sm" 
+    >
+    <!-- p-datatable-striped -->
+        <ng-template pTemplate="header" >
+            <tr>
+                <th [ngClass]="'header'" id="id" style="width: 30px; text-align: center;"></th>
+                <th [ngClass]="'header'" id="name" pSortableColumn="name" style="width: 90px; text-align: center; font-size: 17px;">Ad <p-sortIcon field="name"></p-sortIcon></th>
+                <th [ngClass]="'header'" id="surname" pSortableColumn="surname"style="width: 100px; text-align: center; font-size: 17px;">Soyad <p-sortIcon field="surname"></p-sortIcon></th>
+                <th [ngClass]="'header'" id="suggestion" pSortableColumn="suggestion"style="width: 350px; text-align: center; font-size: 17px;">Görüş <p-sortIcon field="suggestion"></p-sortIcon></th>
+                <th [ngClass]="'header'" id="type" style="width: 120px; display: flex; justify-content: center;">
+                  <div class="flex align-items-center">
+                    Tür
+                    <p-columnFilter class="tur" showApplyButton="false" field="type" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect [ngModel]="value" [options]="applicationsTypes" placeholder="Tür" (onChange)="filter($event.value)" [panelStyle]="{'width':'200px'}">
+                                <ng-template let-option pTemplate="item">
+                                    <div class="inline-block vertical-align-middle">
+                                        <span class="ml-1 mt-1">{{ option }}</span>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+                        </ng-template>
+                    </p-columnFilter>
+                  </div>
+                </th>
+                <th [ngClass]="'header'" id="date" style="width: 170px; text-align: center;" pSortableColumn="date">
+                  Başvuru Tarihi 
+                  <p-sortIcon field="date"/>
+                </th>
+                <th [ngClass]="'header'" id="status" style="width: 150px; display: flex; justify-content: center;">
+                  <div class="flex align-items-center">
+                    Durum 
+                    <p-columnFilter showApplyButton="false" field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="value" [options]="statusTypes" placeholder="Durum" (onChange)="filter($event.value)" [panelStyle]="{'width':'200px'}">
+                            <ng-template let-option pTemplate="item">
+                                <div class="inline-block vertical-align-middle">
+                                    <span class="ml-1 mt-1">{{ option }}</span>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                      </ng-template>
+                    </p-columnFilter>
+                  </div>
+                </th>
+                <th [ngClass]="'header'" id="button" style="width: 150px; text-align: center;"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-applicant let-rowIndex="rowIndex">
+            <tr [ngClass]="{ 
+              'odd' : rowIndex%2 == 0,  
+              'even': rowIndex%2 != 0}">
+                <td style="text-align: center; border-color: grey;">{{rowIndex + 1}}</td>
+                <td style="height: 80px; border-color: grey ;">{{ applicant.name }}</td>
+                <td style="border-color: grey;">{{ applicant.surname }}</td>
+                <td style="text-align: justify; border-color: grey;">{{ applicant.suggestion }}</td>
+                <td style="border-color: grey;">{{ applicant.type }}</td>
+                <td style="border-color: grey;">{{ applicant.date | date: "dd.MM.YYYY" }}</td>
+                <td style="border-color: grey;">{{ applicant.status }}</td>
+                <td style="border-color: grey;">
+                  <div class="flex justify-content-center">
+                    <p-button class="edit-delete" [rounded]="true" severity="secondary" (onClick)="showEditDialog(applicant)">
+                      <i class="pi pi-pencil" style="font-size: 12px;"></i>
+                    </p-button>
+                    <div style="padding: 5px;"></div>
+                    <p></p>
+                    <p-toast></p-toast>
+                    <p-confirmDialog class="confirm-dialog" *ngIf="rowIndex%5==0" [visible]="deleteBoolean" acceptLabel="Evet" rejectLabel="Hayır"></p-confirmDialog>
+                    <p-button class="edit-delete" [rounded]="true" severity="secondary" (onClick)="confirmationDelete($event, applicant)">
+                      <i class="pi pi-times" style="font-size: 12px;"></i>
+                    </p-button>
+                  </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+
+
+<!-- Create Applications -->
+<p-dialog class="create-dialog" modal="true" header="Yeni Başvuru" [(visible)]="displayDialog" [style]="{width: '50vw', height: '170vw'}" (onHide)="applicantForm.reset()">
+  <div style="position: absolute; padding-right: 25px;">
+    <form [formGroup]="applicantForm" (ngSubmit)="saveApplications()">
+      <div style="display: grid; grid-template-columns: 1fr 1fr;">
+        <div class="adding">
+          <div style="padding-bottom: 10px; color: black;"><label for="name">Ad </label></div>
+          <div class="flex flex-column gap-2"> 
+            <input class="edit-create-delete" autocomplete="given-name" type="text" pInputText formControlName="name" 
+              name="name" id="name">
+            <div style="height: 5px;">
+              <small *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="block p-error"
+                style="font-size: small;">
+              <div *ngIf="firstName.errors?.['required']" style="color: red;">Bu alanın doldurulması zorunludur.</div>
+            </small>  
+            </div>
+          </div>
+        </div>
+    
+        <div class="adding">
+          <div style="padding-bottom: 10px; color: black;"><label for="surname">Soyad </label></div>
+          <div class="flex flex-column gap-2">
+            <input class="edit-create-delete" autocomplete="given-name" type="text" pInputText formControlName="surname"
+              name="surname" id="surname">
+            <div style="height: 5px;">
+              <small *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="block p-error"
+              style="font-size: small;">
+              <div *ngIf="lastName.errors?.['required']" style="color: red;">Bu alanın doldurulması zorunludur.</div>
+            </small>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div style="display: grid; grid-template-columns: 0fr 1fr 1fr;">
+        <div class="adding" style="margin-right: auto;">
+          <div style="padding-bottom: 10px; color: black;"><label for="type">Başvuru Türü </label></div>
+          <p-dropdown [options]="applicationsTypes" formControlName="type"
+            placeholder="Tür Seçiniz" [style]="{'width':'170px', 'background-color': '#eaeaea'}"></p-dropdown>
+        </div>
+    
+        <div class="adding" style="margin-left: 30px;">
+          <div style="padding-bottom: 10px; color: black;"><label for="type">Tarih </label></div>
+          <div class="flex flex-column gap-2">
+            <p-calendar formControlName="date" placeholder="Tarih Giriniz" dateFormat="dd.mm.yy"
+              showIcon="true" dataType="string" showButtonBar="true" [inputStyle]="{'width':'175px', 'background-color': '#eaeaea'}" 
+              readonlyInput="true" [maxDate]="now"
+            >    
+            </p-calendar>
+          </div>
+        </div>
+  
+        <div class="adding" style="margin-left: auto;">
+          <div style="padding-bottom: 10px; color: black;"><label for="type">Durum </label></div>
+          <p-dropdown [options]="['Başvuru Kayıt']" formControlName="status"
+            placeholder="Durum Seçiniz" [style]="{'width':'170px', 'background-color': '#eaeaea'}"></p-dropdown>
+        </div>
+      </div>
+  
+      <div>
+        <div class="adding">
+          <div style="padding-bottom: 8px; color: black;"><label for="suggestion" style="font-size: medium;">Görüşünüzü belirtiniz </label></div>
+          <div class="flex flex-column gap-2">
+              <textarea class="edit-create-delete" autocomplete="given-name" rows="6" cols="30" pInputTextarea formControlName="suggestion"
+                name="suggestion" id="suggestion" maxlength="1000" ></textarea>
+          </div>
+          <div style="display: flex; justify-content: end; padding-top: 5px;">
+            <span id="current" style="font-size: medium;" *ngIf="applicantForm.value.suggestion?.length">{{applicantForm.value.suggestion?.length}}</span>
+            <span id="current" style="font-size: medium;" *ngIf="!applicantForm.value.suggestion?.length">0</span>
+            <span id="maximum" style="font-size: medium;">/1000</span>
+          </div>
+          <div style="height: 5px;">
+            <small *ngIf="sugg.invalid && (sugg.dirty || sugg.touched)" class="block p-error" 
+            style="font-size: small;">
+            <div *ngIf="sugg.errors?.['required']" style="color: red;">Bu alanın doldurulması zorunludur.</div>
+            </small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [disabled]="!applicantForm.valid" (click)="displayDialog=false" label="Başvuru Ekle" styleClass="dialog-footer-button p-button-text"
+      (onClick)="saveApplications()"></p-button>
+  </ng-template>
+</p-dialog>
+
+
+<!-- Edit Applications -->
+<p-dialog class="edit-dialog" blockScroll="true" modal="true" header="Yeni Başvuru" closable="false" [(visible)]="displayEditDialog" [style]="{width: '50vw', height: '170vw'}">
+  <div style="padding-right: 20px; width: 45vw;">
+    <form #editForm="ngForm">
+      <div style="display: grid; grid-template-columns: 1fr 1fr;">
+        <div class="adding">
+          <input type="hidden" pInputText ngModel="{{editApplicant?.applicantId}}" name="applicantId" 
+            class="form-control" id="applicantId">
+          
+          <div style="padding-bottom: 10px;"><label for="name">Ad </label></div>
+          <div class="flex flex-column gap-2">
+            <input [disabled]="disabledString" autocomplete="given-name" type="text" pInputText 
+              name="name" id="name" class="edit-create-delete form-control" ngModel="{{editApplicant?.name}}">
+          </div>
+        </div>
+        
+        <div class="adding">
+          <div style="padding-bottom: 10px;"><label for="surname">Soyad </label></div>
+          <div class="flex flex-column gap-2">
+            <input [disabled]="disabledString" autocomplete="given-name" type="text" pInputText class="edit-create-delete form-control"
+              name="surname" id="surname" ngModel="{{editApplicant?.surname}}">
+          </div>
+        </div>
+      </div>
+  
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+        <div class="adding" style="margin-right: auto;">
+          <div style="padding-bottom: 10px;"><label for="type">Başvuru Türü </label></div>
+          <p-dropdown [disabled]="disabledBoolean" [options]="applicationsTypes" class="form-control" ngModel="{{editApplicant?.type}}"
+            placeholder="Tür Seçiniz" name="type" id="type" [style]="{'width':'150px', 'background-color': '#eaeaea'}"></p-dropdown>
+        </div>
+  
+        <div class="adding" style="margin-left: 20px;">
+          <div style="padding-bottom: 10px;"><label for="type">Tarih </label></div>
+          <div class="flex flex-column gap-2">
+            <p-calendar [disabled]="disabledString" placeholder="Tarih Giriniz" dateFormat="dd.mm.yy" dataType="string"
+              showIcon="true" showButtonBar="true" [inputStyle]="{'width':'155px', 'background-color': '#eaeaea'}"
+              class="form-control" name="date" id="date" ngModel="{{showDate}}" 
+              readonlyInput="true" [maxDate]="now"
+            >
+            </p-calendar>
+          </div>
+        </div>
+  
+        <div class="adding" style="margin-left: auto;">
+          <div style="padding-bottom: 10px;"><label for="type">Durum </label></div>
+          <p-dropdown *ngIf="editApplicant?.status === 'Başvuru Kayıt'" [disabled]="disable" [options]="statusTypes" name="status" id="status" class="form-control" 
+            ngModel="{{editApplicant?.status}}" placeholder="Durum Seçiniz" [style]="{'width':'150px', 'background-color': '#eaeaea'}"
+            [(ngModel)]="selectedValue" (onChange)="onDropdownChange($event)"
+          >
+          </p-dropdown>
+
+          <p-dropdown *ngIf="editApplicant?.status != 'Başvuru Kayıt'" [disabled]="disable" [options]="statusTypes2" name="status" id="status" class="form-control" 
+            ngModel="{{editApplicant?.status}}" placeholder="Durum Seçiniz" [style]="{'width':'150px', 'background-color': '#eaeaea'}"
+            [(ngModel)]="selectedValue" (onChange)="onDropdownChange($event)"
+          >
+          </p-dropdown>
+        </div>
+      </div>
+  
+      <div>
+        <div class="adding">
+          <div style="padding-bottom: 8px;"><label for="suggestion" style="font-size: medium;">Görüşünüzü belirtiniz </label></div>
+          <div class="flex flex-column gap-2">
+              <textarea [disabled]="disabledString" autocomplete="given-name" rows="6" cols="30" pInputTextarea class="edit-create-delete form-control"
+                name="suggestion" id="suggestion" ngModel="{{editApplicant?.suggestion}}"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div *ngIf="selectedValue === undefined">
+          <div *ngIf="editApplicant?.status === 'Sonuç Bekliyor'">
+            <div style="padding-left: 35px; padding-bottom: 10px; padding-top: 20px; font-size: 25px;"><label for="name">Kurul Sonucu: </label></div>
+            <div class="adding">
+              <div style="padding-bottom: 10px;"><label for="name">Kurul Tarihi </label></div>
+              <div class="flex flex-column gap-2">
+                <p-calendar required [disabled]="stringForStatus" placeholder="Tarih Giriniz" dateFormat="dd.mm.yy" dataType="string"
+                  showIcon="true" showButtonBar="true" [inputStyle]="{'width':'175px', 'background-color': '#eaeaea'}"
+                  class="form-control" name="committeeDate" id="committeeDate" ngModel="{{editApplicant?.committeeDate}}" 
+                  readonlyInput="true" [maxDate]="now" [minDate]="stringDate"
+                >
+                </p-calendar>
+              </div>
+            </div>
+            <div class="adding">
+              <div style="padding-bottom: 10px;"><label for="result">Sonuç </label></div>
+              <div class="flex flex-column gap-2">
+                <textarea required [disabled]="stringForStatus" autocomplete="given-name" rows="6" cols="30" pInputTextarea class="edit-create-delete form-control"
+                  name="result" id="result" ngModel="{{editApplicant?.result}}"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="selectedValue != undefined">
+          <div *ngIf="selectedValue === 'Sonuç Bekliyor' || selectedValue === 'Sonuçlandı' || editApplicant?.status != 'Başvuru Kayıt'">
+            <div style="padding-left: 35px; padding-bottom: 10px; padding-top: 20px; font-size: 25px;"><label for="name">Kurul Sonucu: </label></div>
+            <div class="adding">
+              <div style="padding-bottom: 10px;"><label for="name">Kurul Tarihi </label></div>
+              <div class="flex flex-column gap-2">
+                <p-calendar required [disabled]="stringForStatus" placeholder="Tarih Giriniz" dateFormat="dd.mm.yy" dataType="string"
+                  showIcon="true" showButtonBar="true" [inputStyle]="{'width':'175px', 'background-color': '#eaeaea'}"
+                  class="form-control" name="committeeDate" id="committeeDate" ngModel="{{editApplicant?.committeeDate}}" 
+                  readonlyInput="true" [maxDate]="now" [minDate]="stringDate"
+                >
+                </p-calendar>
+              </div>
+            </div>
+            <div class="adding">
+              <div style="padding-bottom: 10px;"><label for="result">Sonuç </label></div>
+              <div class="flex flex-column gap-2">
+                <textarea required [disabled]="stringForStatus" autocomplete="given-name" rows="6" cols="30" pInputTextarea class="edit-create-delete form-control"
+                  name="result" id="result" ngModel="{{editApplicant?.result}}"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- <div *ngIf="editApplicant?.status === 'Sonuçlandı'">
+          <div style="padding-left: 35px; padding-bottom: 10px; padding-top: 20px; font-size: 25px;"><label for="name">Kurul Sonucu: </label></div>
+            <div class="adding">
+              <div style="padding-bottom: 10px;"><label for="name">Kurul Tarihi </label></div>
+              <div class="flex flex-column gap-2">
+                <p-calendar [disabled]="true" placeholder="Tarih Giriniz" dateFormat="dd.mm.yy" dataType="string"
+                  showIcon="true" showButtonBar="true" [inputStyle]="{'width':'175px'}"
+                  class="form-control" name="committeeDate" id="committeeDate" ngModel="{{editApplicant?.committeeDate}}" 
+                  readonlyInput="true" [maxDate]="now"
+                >
+                </p-calendar>
+              </div>
+            </div>
+            <div class="adding">
+              <div style="padding-bottom: 10px;"><label for="result">Sonuç </label></div>
+              <div class="flex flex-column gap-2">
+                <textarea [disabled]="true" autocomplete="given-name" rows="6" cols="30" pInputTextarea class="form-control"
+                  name="result" id="result" ngModel="{{editApplicant?.result}}"></textarea>
+              </div>
+            </div>
+        </div> -->
+      </div>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-end gap-3">
+      <!-- <div>
+        <div *ngIf="selectedValue === undefined">
+        <p-button *ngIf="editApplicant?.status === 'Sonuç Bekliyor'" [disabled]="false" label="Kurul" styleClass="p-button-text"
+          [raised]="true" (onClick)="saveCommittee()"></p-button>
+        
+          <p-button *ngIf="editApplicant?.status != 'Sonuç Bekliyor'" [disabled]="true" label="Kurul" styleClass="p-button-text"
+            [raised]="true"></p-button>
+        </div>
+        <div *ngIf="selectedValue != undefined">
+          <p-button *ngIf="selectedValue === 'Sonuç Bekliyor'" [disabled]="false" label="Kurul" styleClass="p-button-text"
+            [raised]="true" (onClick)="saveCommittee()"></p-button>
+        
+          <p-button *ngIf="selectedValue != 'Sonuç Bekliyor'" [disabled]="true" label="Kurul" styleClass="p-button-text"
+            [raised]="true"></p-button>
+        </div>
+      </div> -->
+      <div>
+        <p-button *ngIf="editApplicant?.status === 'Başvuru Kayıt'" [disabled]="editForm.invalid" (click)="displayEditDialog=false" label="Kaydet" styleClass="dialog-footer-button p-button-text"
+          (onClick)="updateApplications(editForm.value)" [raised]="true"></p-button>
+  
+        <p-button *ngIf="editApplicant?.status === 'Sonuç Bekliyor'" [disabled]="editForm.invalid" (click)="displayEditDialog=false" label="Kaydet" styleClass="dialog-footer-button p-button-text"
+          (onClick)="findByIdAndUpdateStatus(editForm.value)" [raised]="true"></p-button>
+        
+        <p-button *ngIf="editApplicant?.status === 'Sonuçlandı'" [disabled]="editForm.invalid" (click)="displayEditDialog=false" label="Kaydet" styleClass="dialog-footer-button p-button-text"
+          [raised]="true"></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

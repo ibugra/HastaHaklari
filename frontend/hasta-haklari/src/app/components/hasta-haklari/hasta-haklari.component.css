@@ -1,0 +1,258 @@
+.navbar{
+    position: fixed;
+    height: 5rem;
+    z-index: 997;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 2rem;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px ;
+    background-color: #96B6C5;
+    transition: left 0.2s;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.basvuru-button {
+    padding-left: 40px;
+}
+
+.table {
+    display: flex;
+    justify-content: center;
+    margin-top: 8%;
+}
+
+.adding {
+    padding: 13px;
+    font-size: 20px;
+}
+
+:host ::ng-deep .p-calendar 
+    .p-datepicker table td.p-datepicker-today>span,
+:host ::ng-deep .p-calendar .p-datepicker 
+    table td.p-datepicker-today>span:hover {
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+}
+
+::ng-deep .p-datepicker table td {
+    padding: 0.1rem !important;
+}
+  
+::ng-deep .p-datepicker table td > span {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+  
+::ng-deep .p-datepicker table {
+    font-size: 10pt;
+    margin: -0.143rem 0;
+    background-color: #eaeaea;
+}
+  
+::ng-deep .p-datepicker .p-datepicker-header {
+    padding: 0.1rem;
+    background-color: #eaeaea;
+}
+
+::ng-deep .p-datepicker {
+    background-color: #eaeaea;
+}
+
+::ng-deep .p-highlight{
+    background-color: #608da2;
+    color: white;
+}
+
+.filter-button {
+    padding-right: 25px;
+}
+
+:host ::ng-deep .add-button .p-button-label {
+    font-size: 17px;
+}
+
+:host ::ng-deep .filter-button .p-button-label {
+    font-size: 15px;
+}
+
+:host ::ng-deep .dialog-footer-button {
+    font-size: 16px;
+    color: black;
+    margin-top: 15px;
+}
+
+:host ::ng-deep .search-date .p-calendar {
+    transform: scale(1);
+}
+
+.search-date {
+    padding-right: 35px;
+}
+
+.search-box{
+    font-size: 15px;
+    background-color: #eaeaea;
+}
+
+tr.odd{ 
+    background-color: #F1F0E8;
+    color: black; 
+} 
+tr.even{ 
+    background-color: #e2e1d8; 
+    color: black; 
+} 
+
+th.header {
+    background-color: #ADC4CE;
+    color: black;
+    border-color: grey;
+}
+
+:host ::ng-deep .p-paginator {
+    background-color: #ADC4CE;
+    font-weight: bold;
+    border-color: black;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-element{
+    color: black; /* Change font color for page numbers */
+    background-color: #eaeaea;
+}
+  
+:host ::ng-deep .p-paginator .p-paginator-icon {
+    color: black; /* Change font color for navigation icons */
+}
+  
+:host ::ng-deep .p-paginator .p-paginator-current {
+    color: black; /* Change font color for the current page indicator */
+}
+
+:host ::ng-deep .p-menubar {
+    background-color: #eaeaea;
+    padding: 17px;
+}
+
+:host ::ng-deep .p-button {
+    color: black; /* Set the desired label color */
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+}
+
+:host ::ng-deep .edit-delete .p-button {
+    color: black; /* Set the desired label color */
+    background-color: #608da2;
+    border: 0.5px solid black;
+}
+
+:host ::ng-deep .p-sortable-column-icon {
+    color: black; /* Set your desired color */
+}
+
+:host ::ng-deep .p-column-filter-menu-button {
+    background-color: #ADC4CE;
+    color: black;
+}
+
+:host ::ng-deep .create-dialog .p-dialog-header{
+    background-color: #ADC4CE;
+    color: black;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px ;
+}
+
+:host ::ng-deep .create-dialog .p-dialog{
+    background-color: #e2e1d8;
+}
+
+:host ::ng-deep .create-dialog .p-dialog-content{
+    background-color: #e2e1d8;
+}
+
+:host ::ng-deep .create-dialog .p-dialog-footer{
+    height: 75px;
+    background-color: #ADC4CE;
+    color: black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px ;
+}
+
+:host ::ng-deep .edit-dialog .p-dialog-header{
+    background-color: #ADC4CE;
+    color: black;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px ;
+}
+
+:host ::ng-deep .edit-dialog .p-dialog{
+    background-color: #e2e1d8;
+}
+
+:host ::ng-deep .edit-dialog .p-dialog-content{
+    background-color: #e2e1d8;
+}
+
+:host ::ng-deep .edit-dialog .p-dialog-footer{
+    height: 75px;
+    background-color: #ADC4CE;
+    color: black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px ;
+}
+
+
+:host ::ng-deep .confirm-dialog .p-dialog-header{
+    background-color: #e2e1d8;
+    color: black;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px ;
+}
+
+:host ::ng-deep .confirm-dialog .p-dialog{
+    background-color: #e2e1d8;
+}
+
+:host ::ng-deep .confirm-dialog .p-dialog-content{
+    background-color: #e2e1d8;
+    color: black;
+}
+
+:host ::ng-deep .confirm-dialog .p-dialog-footer{
+    height: 75px;
+    background-color: #e2e1d8;
+    color: black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px ;
+}
+
+.edit-create-delete {
+    background-color: #eaeaea;
+    color: black;
+}
+
+:host ::ng-deep .p-datepicker-trigger {
+    background-color: #608da2;
+    color: black;
+}
+
+:host ::ng-deep .p-icon-wrapper{
+    color: black;
+}
+
+:host ::ng-deep .p-dropdown-items{
+    background-color: #eaeaea;
+}
+
+
+:host ::ng-deep .p-confirm-dialog-reject{
+    border-color: black;
+}
+
+:host ::ng-deep .p-confirm-dialog-accept{
+    border-color: black;
+}
