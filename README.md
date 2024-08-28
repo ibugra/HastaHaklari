@@ -4,7 +4,6 @@
 
 
 <h2>🚀 Demo</h2>
-![](https://github.com/ibugra/HastaHaklari/blob/main/project%20demo/HastaHaklari.gif)
 
 
 
@@ -27,3 +26,14 @@ Technologies used in the project:
 *   Spring Web
 *   MySQL Driver
 *   Lombok
+
+
+
+
+
+
+
+
+
+
+![](https://github.com/ibugra/HastaHaklari/blob/main/project%20demo/HastaHaklari.gif)
