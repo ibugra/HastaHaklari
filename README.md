@@ -12,8 +12,10 @@
 
 Here're some of the project's best features:
 
-*   REST API for managing views and board results: A simple API for creating updating and deleting suggestions complaints satisfaction or board results.
-*   Uses MySQL for data persistence.
+*   RESTful API with Spring Boot for backend services
+*   Angular frontend for a responsive and dynamic user interface
+*   Database integration using MySQL with Spring Data JPA
+*   CRUD operations for managing views and board results: A simple API for creating updating and deleting suggestions complaints satisfaction or board results.
 
   
   
@@ -21,9 +23,23 @@ Here're some of the project's best features:
 
 Technologies used in the project:
 
+### Backend:
 *   Java 17
 *   Spring Boot
 *   Spring Data JPA
 *   Spring Web
 *   MySQL Driver
 *   Lombok
+*   Gradle 8.7
+
+### Frontend:
+*   Angular 17+
+*   TypeScript
+*   CSS
+*   PrimeNG
+
+### Database:
+*   MySQL
+
+
+
