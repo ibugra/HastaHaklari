@@ -1,6 +1,6 @@
 <h1 align="center" id="title">HASTA HAKLARI</h1>
 
-<p id="description">This project was developed for patients to express their opinions about the hospital. Patients can easily report their suggestions complaints or satisfaction to the hospital management by filling in the required information. Feedback on these opinions is shared with the patients as a Board Result.</p>
+<p id="description">This is a full-stack web application built with Spring Boot on the backend and Angular on the frontend. This project was developed for patients to express their opinions about the hospital. Patients can easily report their suggestions complaints or satisfaction to the hospital management by filling in the required information. Feedback on these opinions is shared with the patients as a Board Result.</p>
 
 
 <h2>🚀 Demo</h2>
