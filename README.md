@@ -4,7 +4,7 @@
 
 
 <h2>🚀 Demo</h2>
-
+![](https://github.com/ibugra/HastaHaklari/blob/main/project%20demo/HastaHaklari.gif)
 
 
 
