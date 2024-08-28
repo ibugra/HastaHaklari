@@ -4,6 +4,7 @@
 
 
 <h2>🚀 Demo</h2>
+![hastahaklari_demo](https://github.com/user-attachments/assets/87f5bcf6-e42b-4f6a-89d4-0d378a73a180)
 
 
 
